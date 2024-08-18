@@ -96,9 +96,9 @@ app.controller('FormController', function($scope, $timeout) {
             repaymentDate: $scope.repaymentDate,
             interest: $scope.interest,
             fees: $scope.fees,
-            status: 'pending', // Default status
+            status: 'Pending', // Default status
             statusHistory: [{
-                status: 'pending',
+                status: 'Pending',
                 date: new Date()
             }]
         };
