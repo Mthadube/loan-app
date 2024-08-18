@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html ng-app="loanApp">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="images/logo.png"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>    
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+    <script src="controllers.js"></script>
+    <style type="text/css">
+        .card {
+            border: 1px solid rgba(150, 150, 150, 0.1);
+            box-shadow: 0 0 20px #666; 
+            height: 100%;
+            padding: 30px;
+            margin-top: 40px;
+            min-height: 500px;
+        }
+        .iconify {
+            color: #fff;
+        }
+        .status-pending {
+            background-color: yellow;
+        }
+        .status-approved {
+            background-color: lightgreen;
+        }
+        .status-rejected {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body ng-controller="DashboardController">
+    <div class="container-fluid" style="padding: 30px 5%; padding-bottom: 100px;">
+        <div class="card" ng-show="!showDetails">
+            <h2 style="margin-bottom: 40px;">Loan Applications Dashboard</h2>
+            <div class="form-group col-sm-5">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="Search...">
+            </div>
+            <div class="form-group col-sm-4">
+                <button class="btn btn-primary" ng-click="exportToExcel()">Export to Excel</button>
+            </div>
+            <div class="pagination" style="margin-top: 30px; margin-bottom: 0;">
+                <button class="btn btn-success btn-sm" ng-disabled="currentPage === 1" ng-click="previousPage()">Previous</button>
+                <span> &nbsp; Page {{currentPage}} of {{totalPages()}} &nbsp;</span>
+                <button class="btn btn-success btn-sm" ng-disabled="currentPage === totalPages()" ng-click="nextPage()">Next</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Cellphone Number</th>
+                            <th>Email</th>
+                            <th>ID Number</th>
+                            <th>Loan Amount</th>
+                            <th>View More</th>
+                            <th>Delete</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="app in pagedItems | filter:searchText | filter:statusFilterFn track by $index">
+                            <td>{{ app.name }} {{ app.surname }}</td>
+                            <td>{{ app.cellphoneNumber }}</td>
+                            <td>{{ app.email }}</td>
+                            <td>{{ app.saIdNumber }}</td>
+                            <td>{{ app.loanAmount }}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewMoreModal" ng-click="viewMore($index)" style="padding: 1px auto;">View More</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" ng-click="deleteApplication($index)" style="padding: 1px auto;">
+                                    <span class="iconify" data-icon="wpf:delete" style=""></span>
+                                </button>
+                            </td>
+                            <td ng-class="{ 'status-approved': app.status === 'Approved', 'status-rejected': app.status === 'Rejected', 'status-pending': app.status === 'Pending' }">{{ app.status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p ng-show="(applications | filter:searchText | filter:statusFilterFn).length === 0">No applications found.</p>
+        </div>
+        <div ng-show="showDetails">
+            <div class="row justify-content-center">
+                <div class="card col-sm-12">
+                    <h2>Applicant Details</h2>
+                    <hr style="margin-bottom: 40px;">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h4 class="mt-3" style="color: #ff9966;">Personal Details</h4>
+                            <p><strong>Name:</strong> {{ selectedApplication.name }}</p>
+                            <p><strong>Surname:</strong> {{ selectedApplication.surname }}</p>
+                            <p><strong>Date of Birth:</strong> {{ selectedApplication.dateOfBirth }}</p>
+                            <p><strong>SA ID Number:</strong> {{ selectedApplication.saIdNumber }}</p>
+                            <p><strong>Cellphone Number:</strong> {{ selectedApplication.cellphoneNumber }}</p>
+                            <p><strong>Email:</strong> {{ selectedApplication.email }}</p>
+                            <p><strong>Address:</strong> {{ selectedApplication.street }} <br> {{ selectedApplication.suburb }} <br> {{ selectedApplication.city }}, {{ selectedApplication.postalCode }}</p>
+                        </div>
+                        <div class="col-sm-5">
+                            <h4 class="mt-3" style="color: #ff9966;">Loan Details</h4>
+                            <p><strong>Loan Amount:</strong> {{ selectedApplication.loanAmount | currency:'R' }}</p>
+                            <p><strong>Interest:</strong> {{ selectedApplication.interest | currency:'R' }}</p>
+                            <p><strong>Fees:</strong> {{ selectedApplication.fees | currency:'R' }}</p>
+                            <p><strong>Total Repayable:</strong> {{ selectedApplication.totalRepayable | currency:'R' }}</p>
+                            <p><strong>Repayment Date:</strong> {{ selectedApplication.repaymentDate | date:'mediumDate' }}</p>
+                            <h6>Documents</h6>
+                            <a class="btn btn-primary" ng-href="{{ selectedApplication.documents.base64 }}" target="_blank">
+                                <span class="iconify" data-icon="healthicons:i-documents-accepted"></span> View Document
+                            </a>
+                        </div>
+                    </div>
+                    <hr style="margin-bottom: 30px;">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h4 class="mt-3" style="color: #ff9966;">Banking Details</h4>
+                            <p><strong>Bank Name:</strong> {{ selectedApplication.bankName }}</p>
+                            <p><strong>Account Number:</strong> {{ selectedApplication.accountNumber }}</p>
+                            <p><strong>Account Type:</strong> {{ selectedApplication.accountType }}</p>
+                            <p><strong>Branch Code:</strong> {{ selectedApplication.branchCode }}</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <button class="btn btn-success col-sm-12" ng-click="updateStatus(selectedApplication, 'Approved')">Approve</button>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <button class="btn btn-danger col-sm-12" ng-click="updateStatus(selectedApplication, 'Rejected')">Reject</button>
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <button class="btn btn-warning col-sm-12" ng-click="updateStatus(selectedApplication, 'Pending')">Mark as Pending</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin-bottom: 30px; margin-top: 30px;">
+                    <p><strong style="font-size: 18px;">Status:</strong>
+                        <span ng-class="{ 'status-approved': selectedApplication.status === 'Approved', 'status-rejected': selectedApplication.status === 'Rejected', 'status-pending': selectedApplication.status === 'Pending' }">
+                            {{ selectedApplication.status }}
+                        </span>
+                    </p>
+                    <hr style="margin-bottom: 30px; margin-top: 30px;">
+                    <h5 style="color: #33cc33;">Status History</h5>
+                    <ul>
+                        <li ng-repeat="history in selectedApplication.statusHistory">
+                            {{ history.status }} on {{ history.date | date:'medium' }}
+                        </li>
+                    </ul>
+                    <hr style="margin-bottom: 30px; margin-top: 30px;">
+                    <div class="row">
+                        <button class="btn btn-primary col-sm-2" style="margin: 5px;" ng-click="backToDashboard()">
+                            <span class="iconify" data-icon="icon-park-outline:back"></span> Back to Dashboard
+                        </button>
+                        <button class="btn btn-primary col-sm-2" style="margin: 5px;" ng-click="printDetails()">
+                            <span class="iconify" data-icon="material-symbols:print-sharp"></span> Print Application
+                        </button>
+                        <button class="btn btn-primary col-sm-2" style="margin: 5px;" ng-click="downloadPDF()">
+                            <span class="iconify" data-icon="mdi:file-download-outline"></span> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

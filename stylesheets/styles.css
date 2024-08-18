@@ -1,0 +1,247 @@
+
+.tooltip-range {
+    position: relative;
+    top: -25px;
+    background: #000;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+}    
+
+
+form input[type="range"],
+form input[type="file"],
+form select {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+form button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+form span {
+    color: red;
+    font-size: 12px;
+}
+
+.register .container {
+    //max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}  
+
+.register .card {
+    border: 1px solid rgba(150, 150, 150, 0.1);
+    box-shadow: 0 0 20px #666;
+    height: 100%;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.register .form-group {
+    margin-bottom: 15px;
+}
+
+.register label {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 0;
+}
+
+.register input[type="text"],
+.register input[type="email"],
+.register input[type="password"],
+.register input[type="date"] {
+    width: 100%;
+    padding: 3px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.register .form-check {
+    display: flex;
+    align-items: center;
+}
+
+.register .form-check input {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background: #0066ff;
+}
+
+.progress .line {
+    width: 80px;
+    padding: 3px;
+    background: #ff9966;
+    margin: 0;
+    margin-top: 12px;
+}
+
+.register .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to right, #ff9966, #ff6666);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.register .btn:hover {
+    background: #85e085;
+    color: #fff;
+}
+
+.register .error {
+    color: red;
+    font-size: 12px;
+}
+
+.register .nav-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.register .nav-tabs a {
+    padding: 10px 20px;
+    margin: 0 5px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.register .nav-tabs a.active {
+    background: #0056b3;
+}
+
+.amount {
+    padding-top: 40px 40px 200px 40px;
+}
+
+.amount .card{
+    border: 1px solid rgba(150, 150, 150, 0.1);
+    box-shadow: 0 0 20px #666;
+    height: 100%;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.amount .btn {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    background: linear-gradient(to right, #ff9966, #ff6666);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.amount .btn:hover {
+    background: #85e085;
+}
+
+.amount button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #33cc33;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.amount button:hover{
+    background: #85e085;
+}
+
+.amount select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.upload label {
+    color: #33cc33;
+}
+
+.success strong {
+    color: #333;
+}
+
+.success {
+    color: #ff9966;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 0 8px;
+    text-align: left;
+    font-size: 12px;
+}
+
+th {
+    background: #0099ff;
+    color: #fff;
+}
+
+.status-approved {
+    color: #33cc33;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: red;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #ff9933;
+    font-weight: bold;
+}

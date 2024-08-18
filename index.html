@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="loanApp">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Flexi Finance</title>
+    <link rel="icon" type="image/png" href="images/logo.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>     
+    <script src="app.js"></script>
+    <script src="index-controller.js"></script>
+</head> 
+<body data-spy="scroll" data-target=".navbar" data-offset="250" ng-controller="IndexFormController">
+    <nav class="navbar navbar-expand-lg" id="top-nav" style="background: #ff9966; border-bottom: 1px solid rgba(250, 250, 250, 0.1);">
+        <div class="container-fluid"> 
+            <div class="container">
+              <a class="navbar-brand" href="#" style="display: flex; line-height: 21px; margin-top: 15px;">
+                <img src="images/logo.png" class="img-fluid animatable zoomIn" style="width: 80px;">
+                <h2 style="color: #fff; font-weight: bolder;">Flexi Finance</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>  
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a id="#home-btn" class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a id="about-btn" class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a id="about-btn" class="nav-link" href="#why-choose-us">Why Choose Us</a>
+                </li>
+                <li class="nav-item"> 
+                    <a id="contact-btn" class="nav-link" href="#contact">Contact Us</a>
+                </li>
+          <li class="nav-item">
+            <a id="shop" class="nav-link btn btn-sm" href="register.html" style="">Apply Now</a>
+          </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</nav>
+
+<div class="container-fluid carousel" style="background: linear-gradient(#ff9966, #ff6666);">
+    <div class="container" style="//padding-top: 60px; padding-bottom: 60px;">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="images/finance.png" class="img-fluid" style="width: 100%;">
+            </div>
+            <div class="col-sm-8" style="">
+                <h1 style="color: #fff; font-weight: 800;">Welcome to Flex Finance</h1>
+                <h3 style="color: #fff; font-weight: 700;">Get fast loans up to R5000</h3>
+                <div class="justify-content-center">
+                    <a ng-href="register.html" type="button" class="col-sm-4 btn" >Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="padding: 0; margin: 0;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ff6666" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,58.7C384,53,480,43,576,42.7C672,43,768,53,864,74.7C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+</div>
+<div class="container calculator" style="">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 card bg-light text-dark text-center">
+            <div class="card-body">
+                <h2 class="card-title text-center" style="font-weight: bolder;">How much do you need?</h2>
+                <hr>
+                <h4 class="text-left" style="margin-bottom: 40px;">Loan Amount:</h4>
+                <div class="form-group position-relative" style="margin-bottom: 30px;">
+                    <input type="range" class="custom-range" id="loanAmount" min="500" max="5000" step="50" ng-model="loanAmount" ng-change="calculateLoanDetails()">
+                    <div class="tooltip-range">{{loanAmount | currency:'R'}}</div>
+                </div>
+                <h4 class="text-left" style="margin-bottom: 40px;">Repayment Days:</h4>
+                <div class="form-group position-relative">
+                    <input type="range" class="custom-range" id="repaymentDays" min="3" max="50" step="1" ng-model="repaymentDays" ng-change="calculateRepaymentDate()">
+                    <div class="tooltip-range">{{repaymentDays}} days</div>
+                </div>
+                <div style="font-weight: 600;">
+                    <p class="text-left">Interest: <span>{{interest | currency:'R'}}</span></p>
+                    <p class="text-left">Fees: <span>{{fees | currency:'R'}}</span></p>
+                    <h4 class="text-left">Total Repayable: <span>{{totalRepayable | currency:'R'}}</span></h4>
+                    <p class="text-left">Repayment Date: <span>{{repaymentDate | date:'fullDate'}}</span></p>
+                </div>
+                <div class="justify-content-center">
+                    <div class="col-sm-5" style="padding: 0; margin-top: 30px;">
+                        <a href="register.html" type="button" class="btn" >Apply Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid steps" style="background: rgba(255, 238, 230, 0.5); margin-top: 40px;">
+    <div class="container" style="padding-top: 40px; min-height: 400px;">
+        <h2 class="text-center" style="color: #33cc33; font-weight: 700;">Easy Online Application Process</h2>
+        <h4 class="text-center" style="margin-top: 30px;">Get Your Loan In 3 Easy Steps</h4>
+        <div class="row" style="margin-top: 80px;">
+            <div class="col-sm-4" style="">
+                <div class="card">
+                    <div class="text-center">
+                        <span class="iconify" data-icon="fluent:form-new-20-regular"></span>
+                    </div>
+                    <h5>Step 1:</h5>
+                    <p>Complete the Application steps, Upload your ID, payslip & 3 months bank statements, and submit your application.</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="text-center">
+                        <span class="iconify" data-icon="material-symbols-light:order-approve-outline"></span>
+                    </div>  
+                    <h5>Step 2:</h5>    
+                    <p>Once you have successfully submitted your application, We will start processing it immediately. You will then receive an email of the outcome.</p>              
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="text-center">
+                        <span class="iconify" data-icon="game-icons:take-my-money"></span>
+                    </div> 
+                    <h5>Step 3:</h5>
+                    <p>Once approved, the funds will be paid out into your Bank Account as soon as possible.</p>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid why-choose-us" id="why-choose-us" style="margin-top: 40px; margin-bottom: 50px;">
+    <div class="container" style="padding-top: 0; min-height: 400px;">
+        <h2 class="text-center" style="color: #ff9966; font-weight: 700;">Why We Are The Best</h2>
+        <h4 class="text-center" style="margin-top: 30px;">We Offer Quick & Easy Application Process</h4>
+        <div class="row" style="margin-top: 40px; padding: 0; box-shadow: 0 0 20px #666;">
+            <div class="col-sm-4">
+             <div class="card" style="background: #f5f5f5;">
+                <div class="text-center">
+                    <span class="iconify" data-icon="game-icons:money-stack"></span>
+                </div>
+                <h4 class="text-center" style="font-weight: bolder;">Lower Rates</h4>
+                <p class="text-center">Enjoy lower rates with our loan service, designed to make borrowing affordable and manageable. We offer competitive interest rates to help you save money and meet your financial goals with ease.</p>
+            </div> 
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="background:  linear-gradient(to right, #ff9966, #ff6666);">
+                <div class="text-center">
+                    <span class="iconify" data-icon="healthicons:money-bag-outline" style="color: #fff;"></span>
+                </div>
+                <h4 class="text-center" style="color: #fff;font-weight: bolder;">Quick & Easy</h4>
+                <p class="text-center" style="color: #fff;">Our application process is streamlined for your convenience. With just a few clicks, you can apply for a loan and get approved within minutes. Say goodbye to long waits and complicated procedures.</p>
+            </div> 
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="background: #333;">
+                <div class="text-center">
+                    <span class="iconify" data-icon="arcticons:moto-secure"></span>
+                </div>
+                <h4 class="text-center" style="color: #fff; font-weight: bolder;">Safe & Secure</h4>
+                <p class="text-center" style="color: #fff;">We prioritize your privacy and security. Our platform uses advanced encryption and security measures to protect your personal information, ensuring a safe and worry-free borrowing experience.</p>
+            </div> 
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 40px;">
+        <a href="register.html" class="col-sm-4 btn">Apply Online Now</a>
+    </div>
+</div>
+</div>
+<div class="container-fluid contact" id="contact" style="padding-top: 30px; padding-bottom: 20px;">
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-7" id="main-form">
+            <form id="contactForm" class="contact__form" method="post" action="mail.php" name="contactForm" novalidate>
+              <h4 class="text-center animatable fadeInDown" style="color: #fff; font-weight: bolder;">Got A Question? Get In Touch</h4>
+              <br>
+              <div class="form-group" ng-class="{'has-error' : contactForm.name.$invalid && !contactForm.name.$pristine && contactForm.name.$touched}">
+                <input type="text" class="form-control" id="name" placeholder="* Full name" name="name"  ng-model="user.name" ng-minlength="3" required>
+                <p ng-show="contactForm.name.$invalid && !contactForm.name.$pristine && contactForm.name.$touched" class="help-block">Please enter full name</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : contactForm.email.$invalid && !contactForm.email.$pristine && contactForm.email.$touched}">
+                <input type="email" class="form-control" id="email" placeholder="* Email address" name="email" ng-model="user.email" required>
+                <p ng-show="contactForm.email.$invalid && !contactForm.email.$pristine && contactForm.email.$touched" class="help-block">Please enter valid email address</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : contactForm.phone.$invalid && !contactForm.phone.$pristine && contactForm.phone.$touched}">
+                <input type="tel" class="form-control" id="phone" placeholder="* Cellphone number" name="phone" ng-model="user.phone" ng-minlength="10" required>
+                <p ng-show="contactForm.phone.$invalid && !contactForm.phone.$pristine && contactForm.phone.$touched" class="help-block">Please enter valid cellphone number</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : contactForm.comment.$invalid && !contactForm.comment.$pristine && contactForm.comment.$touched}">
+                <textarea class="form-control" rows="5" id="comment" placeholder="* Comments" name="comment" ng-model="user.comment" required style="border: 1px solid #f68720; border-radius: 0; height: 70px;"></textarea>
+                <p ng-show="contactForm.comment.$invalid && !contactForm.comment.$pristine && contactForm.comment.$touched" class="help-block">Please enter valid comments</p>
+            </div>
+            <!--hidden honeypot-->
+            <input type="number" id="age" name="age" style="margin: 0; opacity: 0; height: 5px; width: 2px;">
+            <button class="btn" type="submit" id="submit" ng-disabled="contactForm.$invalid" class="btn">SUBMIT</button>
+            <br>
+            <!-- form sent success message -->
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12">
+                  <div class="alert alert-success contact__msg" style="display: none;" role="alert">
+                    Your inquiry was sent successfully. We will get back to you soonest!
+                </div>
+            </div>
+        </div>
+        <!-- end message -->
+        <br>
+    </form>
+</div>
+</div>
+</div>
+</div>
+
+<a class="support animatable zoomIn" href="https://wa.me/+27814573294" style="position: fixed; right: 25px; bottom: 20px; text-decoration: none; animation-delay: 1s; z-index: 1000;">
+    <div style="position: relative;">
+      <p style="margin-left: 25px; font-size: 15px; color: #fff; background: #5dba47; padding: 5px 10px; border: 1px solid rgba(255, 255, 2555, .6); border-radius: 17px; border-top-right-radius: 2px; box-shadow: 0 0 13px #444; font-weight: bold;"><span class="iconify" data-icon="cib:whatsapp" style="font-size: 18px; margin-bottom: -2px;"></span> &nbsp;Chat With Us</p>
+  </div>
+</a>
+<div class="container-fluid footer" style="background: #001133; padding-top: 50px;">
+    <div class="container">
+      <div class="row" style="padding-left: 5%;">
+        <br>
+        <div class="col-sm-3 bottom-nav">
+          <ul class="" style="list-style-type: none; padding-left: 0; line-height: 30px;">
+            <li class="animatable fadeInUp"><a id="home-btn2" href="#home">Home</a></li>
+            <li class="animatable fadeInUp"><a href="about.html">About Us</a></li>
+            <li class="animatable fadeInUp"><a href="#why-choose-us">Why Choose Us</a></li>
+            <li class="animatable fadeInUp"><a href="register.html">Apply Now</a></li>
+            <li class="animatable fadeInUp"><a href="terms.html">Terms & Conditions</a></li>
+            <li class="animatable fadeInUp"><a id="contact-btn3" href="#contact">Contact Us</a></li>
+        </ul>
+        <hr style="border: 1px solid rgba(255,255,255, 0.1);">
+    </div>
+    <div class="col-sm-5 details">
+      <!--<h4 class="animatable fadeInUp" style="color: #fff;">Contact Details:</h4>-->
+      <p class="animatable fadeInUp"><span style="font-size: 17px;"><i class="fab fa-whatsapp" style="color: #ff9966;"></i></span> &nbsp;<a href="tel:+27814573294">+27 81 457 3294</a></p>
+      <p class="animatable fadeInUp"><i class="far fa-envelope" style="color: #ff9966;"></i> &nbsp;<a href="mailto:info@bcgenergy.co.za">info@flexifinance.co.za</a></p>
+      <p class="animatable fadeInUp"><i class="fab fa-facebook-square" style="font-size: 18px; color: #ff9966;"></i> &nbsp;<a href="https://www.facebook.com/BCGenergies">FlexiFinance</a></p>
+      <p class="animatable fadeInUp" style="color: #fff;"><i class="fas fa-map-marker" style="font-size: 18px; color: #ff9966;"></i> &nbsp; 23 Sekretaris Street, Birch Acres.</p>   
+      <hr style="border: 1px solid rgba(255,255,255, 0.1);">       
+      <br>
+  </div>
+  <div class="col-sm-4">
+      <p style="color: #fff;">Copyright &copy; <script>document.write(new Date().getFullYear());</script> | Flexi Finance</p>
+      <a class="navbar-brand" href="#" style="display: flex; line-height: 21px; margin-top: 0; margin-bottom: 0;">
+        <img src="images/logo.png" class="img-fluid" width="" style="margin-top: 0; margin-right: 8px; filter: saturate(150%); width: 60px;"> 
+        <div class="" style="margin-top: 17px; line-height: 17px;">
+            Flexi Finance
+            <br>
+        </div>
+    </a>
+    <a href="https://anythingtech.co.za/web-design.html" style="font-size: 11px;">Web Design By AnythingTech IT Solutions</a>
+    <br>
+    <br>
+</div>
+<br>
+</div>
+</div>
+</div>  
+<!-- Include Bootstrap 4 JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

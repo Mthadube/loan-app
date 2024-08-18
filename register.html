@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html ng-app="loanApp">
+<head>
+    <title>Loan Application</title>
+    <link rel="icon" type="image/png" href="images/logo.png"/>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script> 
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+</head>
+<body ng-controller="FormController">
+    <div class="container register" style="margin-top: 50px; margin-bottom: 70px;">
+        <div ng-show="step === 1">
+            <div class="row justify-content-center progress" style="background: #fff; min-height: 50px;">
+              <div class="col-sm-8"> 
+                  <div class="row justify-content-center"> 
+                    <div class="text-center">
+                        <span class="iconify" data-icon="carbon:circle-filled" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Register</h2> 
+            <form class="row" ng-submit="registerUser()">
+                <div class="form-group col-sm-6">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" ng-model="user.name">
+                    <span class="error">{{ errors.name }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="surname">Surname</label>
+                    <input type="text" id="surname" ng-model="user.surname">
+                    <span class="error">{{ errors.surname }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth" ng-model="user.dateOfBirth">
+                    <span class="error">{{ errors.dateOfBirth }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="saIdNumber">SA ID Number</label>
+                    <input type="text" id="saIdNumber" ng-model="user.saIdNumber">
+                    <span class="error">{{ errors.saIdNumber }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="cellphoneNumber">Cellphone Number</label>
+                    <input type="text" id="cellphoneNumber" ng-model="user.cellphoneNumber">
+                    <span class="error">{{ errors.cellphoneNumber }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" ng-model="user.email">
+                    <span class="error">{{ errors.email }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="confirmEmail">Confirm Email</label>
+                    <input type="email" id="confirmEmail" ng-model="user.confirmEmail">
+                    <span class="error">{{ errors.confirmEmail }}</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="street">Address: Street</label>
+                    <input type="text" id="street" ng-model="user.street">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="suburb">Suburb</label>
+                    <input type="text" id="suburb" ng-model="user.suburb">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="city">City</label>
+                    <input type="text" id="city" ng-model="user.city">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" ng-model="user.postalCode">
+                </div>
+                <div class="form-group form-check col-sm-6">
+                    <input type="checkbox" id="termsAccepted" ng-model="user.termsAccepted">
+                    <label for="termsAccepted">I accept the terms and conditions</label>
+                    <span class="error">{{ errors.termsAccepted }}</span>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn">Continue</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="index.html" class="btn" style="background: #0066ff;">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div ng-show="step === 2" class="amount">
+        <div class="row justify-content-center progress" style="background: #fff; min-height: 50px;">
+              <div class="col-sm-8"> 
+                  <div class="row justify-content-center"> 
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="carbon:circle-filled" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card col-sm-6">
+                <h2 style="margin-bottom: 30px;">Loan Details</h2>
+                <form name="loanDetailsForm" ng-submit="submitLoanDetails()">
+                    <div class="form-group position-relative" style="margin-bottom: 30px;">
+                        <input type="range" class="custom-range" id="loanAmount" min="500" max="5000" step="50" ng-model="loanAmount" ng-change="calculateLoanDetails()">
+                        <div class="tooltip-range">{{loanAmount | currency:'R'}}</div>
+                    </div>
+                    <h4 class="text-left" style="margin-bottom: 40px;">Repayment Days:</h4>
+                    <div class="form-group position-relative">
+                        <input type="range" class="custom-range" id="repaymentDays" min="3" max="50" step="1" ng-model="repaymentDays" ng-change="calculateRepaymentDate()">
+                        <div class="tooltip-range">{{repaymentDays}} days</div>
+                    </div>
+                    <div style="font-weight: 600;">
+                        <p class="text-left">Interest: <span>{{interest | currency:'R'}}</span></p>
+                        <p class="text-left">Fees: <span>{{fees | currency:'R'}}</span></p>
+                        <h4 class="text-left">Total Repayable: <span>{{totalRepayable | currency:'R'}}</span></h4>
+                        <p class="text-left">Repayment Date: <span>{{repaymentDate | date:'fullDate'}}</span></p>
+                    </div>
+                    <hr style="margin-bottom: 30px;">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="loanPurpose">Purpose of Loan:</label>
+                        <select id="loanPurpose" ng-model="loanPurpose" required>
+                            <option value="">Select Purpose</option>
+                            <option value="education">Education Expenses</option>
+                            <option value="medical">Medical Expenses</option>
+                            <option value="business">Business Expenses</option>
+                            <option value="relocation">Relocation Expenses</option>
+                            <option value="Vehicle">Vehicle Expenses</option>
+                            <option value="repay-loan">Repay Existing Loan</option>
+                            <option value="other">Other Expenses</option>
+                        </select>
+                    </div>
+                    <hr style="margin-bottom: 30px;">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Continue</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn" ng-click="goBack()" style="background: #0066ff;">Back</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Step 3: Document Upload -->
+    <div ng-show="step === 3" class="upload">
+        <div class="row justify-content-center progress" style="background: #fff; min-height: 50px;">
+              <div class="col-sm-8"> 
+                  <div class="row justify-content-center"> 
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="carbon:circle-filled" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="icons8:circle" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card col-sm-6">
+                <h2 style="margin-bottom: 40px;">Please Upload Required Documents</h2>
+                <form name="uploadForm" ng-submit="submitDocuments()" novalidate>
+                    <div class="form-group">
+                        <label for="uploadForm">ID Document:</label> 
+                        <input type="file" name="documents" ng-model="application.documents.file" file-model="application.documents" required>
+                    </div>
+                    <div ng-if="uploadForm.documents.$error.required && uploadForm.$submitted">
+                        Document is required.
+                    </div>
+                    <div class="form-group">
+                        <label for="bankName">Bank Name:</label>
+                        <input type="text" class="form-control" id="bankName" ng-model="application.bankName" name="bankName" required>
+                    </div>
+                    <div ng-if="uploadForm.bankName.$error.required && uploadForm.$submitted">
+                        Bank Name is required.
+                    </div>
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number:</label>
+                        <input type="text" class="form-control" id="accountNumber" ng-model="application.accountNumber" name="accountNumber" required>
+                    </div>
+                    <div ng-if="uploadForm.accountNumber.$error.required && uploadForm.$submitted">
+                        Account Number is required.
+                    </div>
+                    <div class="form-group">
+                        <label for="accountType">Branch Code:</label>
+                        <input type="text" class="form-control" id="accountType" ng-model="application.accountType" name="accountType" required>
+                    </div>
+                    <div ng-if="uploadForm.accountType.$error.required && uploadForm.$submitted">
+                        Branch Code is required.
+                    </div>
+                    <div class="form-group">
+                        <label for="branchCode">Branch Code:</label>
+                        <input type="text" class="form-control" id="branchCode" ng-model="application.branchCode" name="branchCode" required>
+                    </div>
+                    <div ng-if="uploadForm.branchCode.$error.required && uploadForm.$submitted">
+                        Branch Code is required.
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Continue</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn" ng-click="goBack()" style="background: #0066ff; font-size: 16px;">Back</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="step === 4" class="success">
+        <div class="row justify-content-center progress" style="background: #fff; min-height: 50px;">
+              <div class="col-sm-8"> 
+                  <div class="row justify-content-center"> 
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                    <div class="text-center" style="padding: 0;">
+                        <div class="line"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="iconify" data-icon="ooui:success" style="color: #33cc33; font-size: 30px;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card col-sm-6">
+                <h4 class="text-center text-dark">Application Submitted</h4>
+                <hr style="margin-bottom: 30px;">
+                <p style="color: #33cc33;">Your loan application has been submitted and will be processed as soon as possible. Below are the details of your application:</p>
+                <hr style="margin-bottom: 30px;">
+                <p><strong>Name:</strong> {{ user.name }} {{ user.surname }}</p>
+                <p><strong>Date of Birth:</strong> {{ user.dateOfBirth }}</p>
+                <p><strong>SA ID Number:</strong> {{ user.saIdNumber }}</p>
+                <p><strong>Cellphone Number:</strong> {{ user.cellphoneNumber }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Loan Amount:</strong> {{ loanAmount }}</p>
+                <p><strong>Loan Purpose:</strong> {{ loanPurpose }}</p>
+                <p><strong>Total Repayable:</strong> {{ totalRepayable }}</p>
+                <hr style="margin-bottom: 30px; margin-top: 20px;">
+                <a href="index.html" class="btn btn-sm btn-success">Done <span class="iconify" data-icon="weui:done2-filled" style="color: #fff; margin-top: 20px;"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
