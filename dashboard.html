@@ -32,8 +32,11 @@
         .status-approved {
             background-color: lightgreen;
         }
-        .status-rejected {
+        .status-declined {
             background-color: lightcoral;
+        }
+        button {
+            width: 100%;
         }
     </style>
 </head>
@@ -48,9 +51,9 @@
                 <button class="btn btn-primary" ng-click="exportToExcel()">Export to Excel</button>
             </div>
             <div class="pagination" style="margin-top: 30px; margin-bottom: 0;">
-                <button class="btn btn-success btn-sm" ng-disabled="currentPage === 1" ng-click="previousPage()">Previous</button>
+                <button style="width: 90px;" class="btn btn-success btn-sm" ng-disabled="currentPage === 1" ng-click="previousPage()">Previous</button>
                 <span> &nbsp; Page {{currentPage}} of {{totalPages()}} &nbsp;</span>
-                <button class="btn btn-success btn-sm" ng-disabled="currentPage === totalPages()" ng-click="nextPage()">Next</button>
+                <button style="width: 90px;" class="btn btn-success btn-sm" ng-disabled="currentPage === totalPages()" ng-click="nextPage()">Next</button>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -62,7 +65,7 @@
                             <th>ID Number</th>
                             <th>Loan Amount</th>
                             <th>View More</th>
-                            <th>Delete</th>
+                            <!--<th>Delete</th>-->
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -74,14 +77,14 @@
                             <td>{{ app.saIdNumber }}</td>
                             <td>{{ app.loanAmount }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewMoreModal" ng-click="viewMore($index)" style="padding: 1px auto;">View More</button>
+                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#viewMoreModal" ng-click="viewMore($index)" style="padding: 1px auto;">View Application</button>
                             </td>
-                            <td>
+                            <!--<td>
                                 <button class="btn btn-danger btn-sm" ng-click="deleteApplication($index)" style="padding: 1px auto;">
                                     <span class="iconify" data-icon="wpf:delete" style=""></span>
                                 </button>
-                            </td>
-                            <td ng-class="{ 'status-approved': app.status === 'Approved', 'status-rejected': app.status === 'Rejected', 'status-pending': app.status === 'Pending' }">{{ app.status }}</td>
+                            </td>-->
+                            <td ng-class="{ 'status-approved': app.status === 'Approved', 'status-sent': app.status === 'Contract Sent', 'status-paid': app.status === 'Paid', 'status-ascalated': app.status === 'Escalated', 'status-checked': app.status === 'Debit Checked', 'status-fraud': app.status === 'Fraud', 'status-declined': app.status === 'Declined', 'status-pending': app.status === 'Pending' }">{{ app.status }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -126,21 +129,39 @@
                             <p><strong>Account Type:</strong> {{ selectedApplication.accountType }}</p>
                             <p><strong>Branch Code:</strong> {{ selectedApplication.branchCode }}</p>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="row" style="margin-bottom: 15px;">
-                                <button class="btn btn-success col-sm-12" ng-click="updateStatus(selectedApplication, 'Approved')">Approve</button>
+                        <div class="col-sm-7">
+                            <h4 class="mt-3" style="color: #ff9966; margin-bottom: 30px;">Action</h4>
+                            <div class="row">
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button class="btn btn-success " ng-click="updateStatus(selectedApplication, 'Approved')">Approve</button>
                             </div>
-                            <div class="row" style="margin-bottom: 15px;">
-                                <button class="btn btn-danger col-sm-12" ng-click="updateStatus(selectedApplication, 'Rejected')">Reject</button>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button class="btn btn-danger" ng-click="updateStatus(selectedApplication, 'Declined')">Decline</button>
                             </div>
-                            <div class="row" style="margin-bottom: 15px;">
-                                <button class="btn btn-warning col-sm-12" ng-click="updateStatus(selectedApplication, 'Pending')">Mark as Pending</button>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button class="btn btn-warning" ng-click="updateStatus(selectedApplication, 'Pending')">Pending</button>
+                            </div>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button style="background: #6699ff;" class="btn text-light" ng-click="updateStatus(selectedApplication, 'Escalated')">Escalate</button>
+                            </div>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button style="background: #33ccff;" class=" btn" ng-click="updateStatus(selectedApplication, 'Debit Checked')">Debit Checked</button>
+                            </div>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button style="background: #99ff66;" class=" btn" ng-click="updateStatus(selectedApplication, 'Contract Sent')">Coctract Sent</button>
+                            </div>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button style="background: #ff0066;" class=" btn text-light" ng-click="updateStatus(selectedApplication, 'Fraud')">Fraud</button>
+                            </div>
+                            <div class="col-sm-3" style="margin-bottom: 15px;">
+                                <button style="background: #0066ff;" class=" btn text-light" ng-click="updateStatus(selectedApplication, 'Paid')">Paid</button>
                             </div>
                         </div>
                     </div>
+                    </div>
                     <hr style="margin-bottom: 30px; margin-top: 30px;">
                     <p><strong style="font-size: 18px;">Status:</strong>
-                        <span ng-class="{ 'status-approved': selectedApplication.status === 'Approved', 'status-rejected': selectedApplication.status === 'Rejected', 'status-pending': selectedApplication.status === 'Pending' }">
+                        <span ng-class="{ 'status-approved': app.status === 'Approved', 'status-sent': app.status === 'Contract Sent', 'status-paid': app.status === 'Paid', 'status-ascalated': app.status === 'Escalated', 'status-checked': app.status === 'Debit Checked', 'status-fraud': app.status === 'Fraud', 'status-declined': app.status === 'Declined', 'status-pending': app.status === 'Pending' }">
                             {{ selectedApplication.status }}
                         </span>
                     </p>

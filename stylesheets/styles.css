@@ -232,12 +232,42 @@ th {
     font-weight: bold;
 }
 
-.status-rejected {
+.status-declined {
     color: red;
     font-weight: bold;
 }
 
 .status-pending {
     color: #ff9933;
+    font-weight: bold;
+}
+
+.status-escalated {
+    background: #b3ccff;
+    color: #6699ff;
+    font-weight: bold;
+}
+
+.status-fraud {
+    background: #ff99c2;
+    color: #ff0066;
+    font-weight: bold;
+}
+
+.status-paid {
+    background: #99c2ff;
+    color: #0066ff;
+    font-weight: bold;
+}
+
+.status-checked {
+    background: #b3ecff;
+    color: #33ccff;
+    font-weight: bold;
+}
+
+.status-sent {
+    background: #ddffcc;
+    color: #99ff66;
     font-weight: bold;
 }
